@@ -9,13 +9,13 @@ void drawBackground(unsigned x_apple, unsigned y_apple) {
     for (i = 0; i < X_LIMITS; i++) {
         for (j = 0; j < Y_LIMITS; j++) {
             if (i == 0 || i == X_LIMITS - 1)
-                printw("#");
+                printw(SYMBOL_OF_WALL);
             else if (i == x_apple && j == y_apple)
                 printw(SYMBOL_OF_APPLE);
             else if (i != 0 && i != X_LIMITS - 1 && j > 0 && j < Y_LIMITS - 1)
                 printw(" ");
             else
-                printw("#");
+                printw(SYMBOL_OF_WALL);
         }
         printw("\n");
     }

@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
+#include "main.h"
 #include "objects.h"
 
 bool initSnake(objSnake** snake) {
@@ -28,28 +29,11 @@ bool initSnake(objSnake** snake) {
     return true;
 }
 
-void updateSnake(objSnake* snake, ACTION_STATE moviment) {
-    objSnake* temp = snake;
-
-    switch (moviment) {
-        case RIGHT:
-            while (temp != NULL) {
-                temp->snake_x++;
-                mvprintw(temp->snake_y, temp->snake_x, "*");
-                temp = temp->next;
-            }
-            break;
-
-        default:
-            return;
-    }
-}
-
 void printSnake(objSnake* snake) {
     objSnake* temp = snake;
 
     while (temp != NULL) {
-        mvprintw(temp->snake_y, temp->snake_x, "*");
+        mvprintw(temp->snake_y, temp->snake_x, SYMBOL_OF_SNAKE);
         temp = temp->next;
     }
 }
@@ -82,4 +66,49 @@ void updateMovement(ACTION_STATE* action_mov) {
             break;
     }
     return;
+}
+
+void updateSnake(objSnake* snake, ACTION_STATE moviment) {
+    objSnake* temp = snake;
+
+    switch (moviment) {
+        case RIGHT:
+            while (temp != NULL) {
+                temp->snake_x++;
+                temp->snake_y = snake->snake_y;
+                mvprintw(temp->snake_y, temp->snake_x, SYMBOL_OF_SNAKE);
+                temp = temp->next;
+            }
+            break;
+
+        case UP:
+            while (temp != NULL) {
+                temp->snake_x = snake->snake_x;
+                temp->snake_y--;
+                mvprintw(temp->snake_y, temp->snake_x, SYMBOL_OF_SNAKE);
+                temp = temp->next;
+            }
+            break;
+
+        case DOWN:
+            while (temp != NULL) {
+                temp->snake_x = snake->snake_x;
+                temp->snake_y++;
+                mvprintw(temp->snake_y, temp->snake_x, SYMBOL_OF_SNAKE);
+                temp = temp->next;
+            }
+            break;
+
+        case LEFT:
+            while (temp != NULL) {
+                temp->snake_x--;
+                temp->snake_y = snake->snake_y;
+                mvprintw(temp->snake_y, temp->snake_x, SYMBOL_OF_SNAKE);
+                temp = temp->next;
+            }
+            break;
+
+        default:
+            return;
+    }
 }

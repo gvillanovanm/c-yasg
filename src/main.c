@@ -46,13 +46,13 @@ int main(void) {
                 return -1;
         }
 
-        refresh();  // Print it on to the real screen
+        refresh();
         usleep(SPEED * 1000);
     }
 
     // End game
     free(snake);
-    endwin();  // End curses mode
+    endwin();
 
     return 0;
 }
