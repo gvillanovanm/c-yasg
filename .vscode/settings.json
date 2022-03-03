@@ -1,0 +1,10 @@
+{
+    "C_Cpp.intelliSenseEngineFallback": "Enabled",
+    "C_Cpp.clang_format_fallbackStyle": "{ BasedOnStyle: Google, IndentWidth: 4, ColumnLimit: 0}",
+    "editor.tabSize": 2,
+    "editor.formatOnSave": true,
+    "files.associations": {
+        "curses.h": "c",
+        "stdio.h": "c"
+    }
+}
