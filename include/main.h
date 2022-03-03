@@ -8,13 +8,11 @@
 
 #define SPEED 100
 #define INITAL_SNAKE_LENGTH 3
+#define SYMBOL_OF_APPLE "M"
 
 typedef enum GAME_STATE_e {
     INIT,
-    PUT_APPLE,
-    INIT_SNAKE,
     DRAW_SNAKE,
-    UPDATE_SNAKE,
     END_GAME
 } GAME_STATE;
 

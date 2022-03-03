@@ -8,7 +8,7 @@
 #define Y_LIMITS 60  //100
 #define INITIAL_SNAKE_LENGTH 3
 
-void drawSquare(unsigned, unsigned);
+void drawBackground(unsigned, unsigned);
 void sortApple(unsigned* x_apple, unsigned* y_apple);
 
 #endif  // __SNAKE_OBJECTS

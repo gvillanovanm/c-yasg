@@ -7,7 +7,7 @@ typedef enum ACTION_STATE_e {
     UP,
     DOWN,
     LEFT,
-    RIGHT
+    RIGHT,
 } ACTION_STATE;
 
 typedef struct objSnake_t {
@@ -21,5 +21,6 @@ bool initSnake(objSnake** snake);
 void updateSnake(objSnake* snake, ACTION_STATE moviment);
 // void addOneBodySnake(objSnake* snake);
 void printSnake(objSnake* snake);
+void updateMovement(ACTION_STATE* moviment);
 
 #endif  // __SNAKE_MOVEMENT

@@ -1,6 +1,8 @@
 #include "objects.h"
 
-void drawSquare(unsigned x_apple, unsigned y_apple) {
+#include "main.h"
+
+void drawBackground(unsigned x_apple, unsigned y_apple) {
     int i, j;
 
     move(0, 0);
@@ -9,7 +11,7 @@ void drawSquare(unsigned x_apple, unsigned y_apple) {
             if (i == 0 || i == X_LIMITS - 1)
                 printw("#");
             else if (i == x_apple && j == y_apple)
-                printw("M");
+                printw(SYMBOL_OF_APPLE);
             else if (i != 0 && i != X_LIMITS - 1 && j > 0 && j < Y_LIMITS - 1)
                 printw(" ");
             else
@@ -25,6 +27,4 @@ void sortApple(unsigned *x_apple, unsigned *y_apple) {
 
     *y_apple = rand() % (Y_LIMITS - 1);
     if (*y_apple == 0) *y_apple++;
-
-    // mvprintw(*y_apple, *x_apple, "M");
 }

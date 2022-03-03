@@ -8,6 +8,7 @@
         "stdio.h": "c",
         "unistd.h": "c",
         "objects.h": "c",
-        "main.h": "c"
+        "main.h": "c",
+        "movement.h": "c"
     }
 }

@@ -18,8 +18,8 @@ bool initSnake(objSnake** snake) {
         else
             temp->is_head = false;
 
-        temp->snake_x = ((Y_LIMITS - 1) / 2) + i;  //+ INITIAL_SNAKE_LENGTH;
-        temp->snake_y = ((X_LIMITS - 1) / 2);      // + INITIAL_SNAKE_LENGTH;
+        temp->snake_x = ((Y_LIMITS - 1) / 2) + i;
+        temp->snake_y = ((X_LIMITS - 1) / 2);
 
         temp->next = *snake;
         *snake = temp;
@@ -30,15 +30,11 @@ bool initSnake(objSnake** snake) {
 
 void updateSnake(objSnake* snake, ACTION_STATE moviment) {
     objSnake* temp = snake;
-    unsigned cur_x = snake->snake_x, cur_y = snake->snake_y;
 
     switch (moviment) {
         case RIGHT:
             while (temp != NULL) {
-                // next
                 temp->snake_x++;
-
-                // update snake
                 mvprintw(temp->snake_y, temp->snake_x, "*");
                 temp = temp->next;
             }
@@ -56,4 +52,34 @@ void printSnake(objSnake* snake) {
         mvprintw(temp->snake_y, temp->snake_x, "*");
         temp = temp->next;
     }
+}
+
+void updateMovement(ACTION_STATE* action_mov) {
+    char get_key;
+
+    timeout(1);
+    get_key = getch();
+
+    switch (*action_mov) {
+        case RIGHT:
+            if (get_key == 'w') *action_mov = UP;
+            if (get_key == 's') *action_mov = DOWN;
+            break;
+
+        case UP:
+            if (get_key == 'd') *action_mov = RIGHT;
+            if (get_key == 'a') *action_mov = LEFT;
+            break;
+
+        case LEFT:
+            if (get_key == 'w') *action_mov = UP;
+            if (get_key == 's') *action_mov = DOWN;
+            break;
+
+        case DOWN:
+            if (get_key == 'd') *action_mov = RIGHT;
+            if (get_key == 'a') *action_mov = LEFT;
+            break;
+    }
+    return;
 }
