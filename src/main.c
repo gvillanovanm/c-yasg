@@ -1,116 +1,143 @@
-#include <ncurses.h>
-#include <stdlib.h>
-#include <time.h>
-#include <unistd.h>
+#include "main.h"
 
-#define X_LIMITS 40
-#define Y_LIMITS 100
-#define SPEED 100
-#define INITAL_SNAKE_LENGTH 3
+#include "movement.h"
+#include "objects.h"
 
-// Global variables
-unsigned
-    x_apple,
-    y_apple,
-    x_snake = (X_LIMITS - 1) / 2,
-    y_snake = (Y_LIMITS - 1) / 2,
-    x_head_snake = ((X_LIMITS - 1) / 2) + INITAL_SNAKE_LENGTH,
-    y_head_snake = ((Y_LIMITS - 1) / 2) + INITAL_SNAKE_LENGTH,
-    size_of_snake = INITAL_SNAKE_LENGTH;
-
-void createSquare(void) {
-    int i, j;
-    for (i = 0; i < X_LIMITS; i++) {
-        for (j = 0; j < Y_LIMITS; j++) {
-            if (i == 0 || i == X_LIMITS - 1)
-                printw("#");
-            else if (i != 0 && i != X_LIMITS - 1 && j > 0 && j < Y_LIMITS - 1)
-                printw(" ");
-            else
-                printw("#");
-        }
-        printw("\n");
-    }
-}
-
-void putApple(void) {
-    x_apple = rand() % (X_LIMITS - 1);
-    if (x_apple == 0) x_apple++;
-
-    y_apple = rand() % (Y_LIMITS - 1);
-    if (y_apple == 0) y_apple++;
-
-    move(x_apple, y_apple);
-    printw("M");
+void snakeSetup(void) {
+    srand(time(NULL));
+    initscr();
+    curs_set(0);  // delete cursor
+    noecho();     // does not propagate button pressed
 }
 
 int main(void) {
-    // Setup
-    srand(time(NULL));
-    initscr();
-    curs_set(0);
-    timeout(SPEED);
-    noecho();
-    createSquare();
+    // Main variables
+    GAME_STATE game_state = INIT;
+    ACTION_STATE action_mov = RIGHT;
+    objSnake *snake = NULL;
 
-    // Put apple
-    putApple();
+    unsigned x_apple = 0,
+             y_apple = 0;
 
-    // snake
-    char key = 'd';
-    char last_key;
-    move(x_snake, y_snake);
+    // Setup functions
+    snakeSetup();
 
-    while ((last_key = getch()) != 17) {
-        switch (key) {
-            case 'd':
-                y_snake = y_snake + 1;
+    // Loop
+    for (;;) {
+        switch (game_state) {
+            case INIT:
+                sortApple(&x_apple, &y_apple);
+                drawSquare(x_apple, y_apple);
+                game_state = INIT_SNAKE;
                 break;
-            case 's':
-                x_snake = x_snake + 1;
+
+            case PUT_APPLE:
+                sortApple(&x_apple, &y_apple);
+                // game_state = INIT_SNAKE;
                 break;
-            case 'w':
-                x_snake = x_snake - 1;
+
+            case INIT_SNAKE:
+                if (!initSnake(&snake)) {
+                    game_state = END_GAME;
+                    break;
+                }
+                game_state = DRAW_SNAKE;
                 break;
-            case 'a':
-                y_snake = y_snake - 1;
+
+            case DRAW_SNAKE:
+                drawSquare(x_apple, y_apple);
+                printSnake(snake);
+                game_state = UPDATE_SNAKE;
+                break;
+
+            case UPDATE_SNAKE:
+                updateSnake(snake, action_mov);
+                game_state = DRAW_SNAKE;
+                break;
+
+            case END_GAME:
+                sleep(5);
+                free(snake);
+                // getch();   // Wait for user input
+                endwin();  // End curses mode
+                return 0;
+                break;
+
+            default:
                 break;
         }
-
-        if (last_key == 'd' || last_key == 's' || last_key == 'w' || last_key == 'a')
-            key = last_key;
-
-        clear();
-        createSquare();
-        move(x_snake, y_snake);
-
-        if (key == 's')
-            for (int i = 0; i <= size_of_snake; i++) {
-                printw("*");
-                move(x_snake + i, y_snake);
-            }
-        if (key == 'w')
-            for (int i = 0; i <= size_of_snake; i++) {
-                printw("*");
-                move(x_snake + i, y_snake);
-            }
-        if (key == 'a')
-            for (int i = 0; i <= size_of_snake; i++) {
-                printw("*");
-                move(x_snake, y_snake + i);
-            }
-
-        if (key == 'd')
-            for (int i = 0; i <= size_of_snake; i++) {
-                printw("*");
-                move(x_snake, y_snake - i);
-            }
+        refresh();  // Print it on to the real screen
+        usleep(100 * 1000);
+        // timeout(SPEED);  // Wait
     }
 
-    // end
-    // refresh(); /* Print it on to the real screen */
-    getch();  /* Wait for user input */
-    endwin(); /* End curses mode		  */
+    // End game
+    // getch();   // Wait for user input
+    endwin();  // End curses mode
 
     return 0;
 }
+
+// // Global variables
+// unsigned
+//     x_snake = (X_LIMITS - 1) / 2,
+//     y_snake = (Y_LIMITS - 1) / 2,
+//     x_head_snake = ((X_LIMITS - 1) / 2) + INITAL_SNAKE_LENGTH,
+//     y_head_snake = ((Y_LIMITS - 1) / 2) + INITAL_SNAKE_LENGTH,
+//     size_of_snake = INITAL_SNAKE_LENGTH;
+
+// // Put apple
+// putApple();
+
+// // snake
+// char get_key;
+// char key = 'd';
+// move(x_snake, y_snake);
+
+// while ((get_key = getch()) != 17) {
+//     switch (key) {
+//         case 'd':
+//             y_snake = y_snake + 1;
+//             break;
+//         case 's':
+//             x_snake = x_snake + 1;
+//             break;
+//         case 'w':
+//             x_snake = x_snake - 1;
+//             break;
+//         case 'a':
+//             y_snake = y_snake - 1;
+//             break;
+//     }
+
+//     // update key
+//     if (get_key == 'd' || get_key == 's' || get_key == 'w' || get_key == 'a')
+//         key = get_key;
+
+//     // clear();
+//     // createSquare();
+//     move(x_snake, y_snake);
+//     printw("*");
+
+//     // if (key == 's')
+//     //     for (int i = 0; i <= size_of_snake; i++) {
+//     //         printw("*");
+//     //         move(x_snake + i, y_snake);
+//     //     }
+//     // if (key == 'w')
+//     //     for (int i = 0; i <= size_of_snake; i++) {
+//     //         printw("*");
+//     //         move(x_snake + i, y_snake);
+//     //     }
+//     // if (key == 'a')
+//     //     for (int i = 0; i <= size_of_snake; i++) {
+//     //         printw("*");
+//     //         move(x_snake, y_snake + i);
+//     //     }
+
+//     // if (key == 'd')
+//     //     for (int i = 0; i <= size_of_snake; i++) {
+//     //         printw("*");
+//     //         move(x_snake, y_snake - i);
+//     //     }
+// }

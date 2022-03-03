@@ -7,7 +7,6 @@
 */
 {
     "version": "2.0.0",
-
     "tasks": [
         {
             "type": "shell",
@@ -33,7 +32,6 @@
                 "command": ".\\.vscode\\make_build_dir.bat\""
             }
         },
-
         {
             "type": "shell",
             "label": "build active file",
@@ -60,14 +58,14 @@
                 ]
             },
             "linux": {
-                "command": "/usr/bin/gcc",
+                "command": "make",
                 "args": [
-                    "-std=c11",
-                    "-g",
-                    "-Wall",
-                    "${file}",
-                    "-o",
-                    "${workspaceFolder}/build/${fileBasenameNoExtension}"
+                    // "-std=c11",
+                    // "-g",
+                    // "-Wall",
+                    // "${file}",
+                    // "-o",
+                    // "${workspaceFolder}/build/${fileBasenameNoExtension}"
                 ],
             },
             "osx": {
@@ -82,7 +80,6 @@
                 ],
             }
         },
-
         {
             "type": "shell",
             "label": "build current directory",
@@ -106,14 +103,14 @@
                 ]
             },
             "linux": {
-                "command": "/usr/bin/gcc",
+                "command": "make",
                 "args": [
-                    "-std=c11",
-                    "-g",
-                    "-Wall",
-                    "${workspaceFolder}\\*.c",
-                    "-o",
-                    "${workspaceFolder}/build/${fileBasenameNoExtension}"
+                    // "-std=c11",
+                    // "-g",
+                    // "-Wall",
+                    // "${file}",
+                    // "-o",
+                    // "${workspaceFolder}/build/${fileBasenameNoExtension}"
                 ],
             },
             "osx": {
@@ -128,7 +125,6 @@
                 ],
             }
         },
-
         {
             //Mac only: use if the external console does not open on launch
             "label": "Open Terminal",

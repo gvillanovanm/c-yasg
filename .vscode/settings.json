@@ -5,6 +5,9 @@
     "editor.formatOnSave": true,
     "files.associations": {
         "curses.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "unistd.h": "c",
+        "objects.h": "c",
+        "main.h": "c"
     }
 }

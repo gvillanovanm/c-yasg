@@ -12,26 +12,21 @@
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
-            "externalConsole": 
-            false,
+            "externalConsole": false,
             "MIMode": "gdb",
-
-            "program": "${fileDirname}/build/${fileBasenameNoExtension}",
-
+            // "program": "${fileDirname}/build/${fileBasenameNoExtension}",
+            "program": "snake",
             "linux": {
-               "miDebuggerPath": "/usr/bin/gdb", 
+                "miDebuggerPath": "/usr/bin/gdb",
             },
-
             "windows": {
                 "program": "${fileDirname}\\build\\${fileBasenameNoExtension}.exe",
                 "miDebuggerPath": "gdb.exe",
             },
-
             "osx": {
                 "MIMode": "lldb",
                 "externalConsole": true,
             },
-            
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",
@@ -39,7 +34,6 @@
                     "ignoreFailures": true
                 }
             ],
-
             "preLaunchTask": "build active file",
         }
     ]
