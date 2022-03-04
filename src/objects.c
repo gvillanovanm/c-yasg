@@ -2,7 +2,7 @@
 
 #include "main.h"
 
-void drawObjectBackground(unsigned x_apple, unsigned y_apple) {
+void objectDrawBackground(unsigned x_apple, unsigned y_apple) {
     int i, j;
 
     move(0, 0);
@@ -21,7 +21,7 @@ void drawObjectBackground(unsigned x_apple, unsigned y_apple) {
     }
 }
 
-void sortObjectApple(unsigned *x_apple, unsigned *y_apple) {
+void objectSortApple(unsigned *x_apple, unsigned *y_apple) {
     *x_apple = rand() % (X_LIMITS - 1);
     if (*x_apple == 0) *x_apple++;
 

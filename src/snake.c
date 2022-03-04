@@ -11,9 +11,9 @@
 /* --------------------------------------------------------*/
 
 //
-// copySnake
+// snakeCopy
 //
-SnakeObject* copySnake(SnakeObject* snake) {
+SnakeObject* snakeCopy(SnakeObject* snake) {
     SnakeObject *temp = NULL, *listhead = NULL, *temp_snake = snake;
 
     temp = malloc(sizeof(SnakeObject));
@@ -41,9 +41,9 @@ SnakeObject* copySnake(SnakeObject* snake) {
 /* --------------------------------------------------------*/
 
 //
-// initSnake
+// snakeInit
 //
-bool initSnake(SnakeObject** snake) {
+bool snakeInit(SnakeObject** snake) {
     SnakeObject* temp = NULL;
 
     for (int i = 0; i < INITIAL_SNAKE_LENGTH; i++) {
@@ -68,48 +68,48 @@ bool initSnake(SnakeObject** snake) {
 }
 
 //
-// updateSnakeActionAction
+// snakeUpdateAction
 //
-void updateSnakeAction(SNAKE_ACTION* action_mov) {
+void snakeUpdateAction(SNAKE_ACTION* action_mov) {
     char get_key;
 
     timeout(1);
     get_key = getch();
 
     switch (*action_mov) {
-        case RIGHT:
-            if (get_key == 'w') *action_mov = UP;
-            if (get_key == 's') *action_mov = DOWN;
+        case SNAKE_RIGHT:
+            if (get_key == 'w') *action_mov = SNAKE_UP;
+            if (get_key == 's') *action_mov = SNAKE_DOWN;
             break;
 
-        case UP:
-            if (get_key == 'd') *action_mov = RIGHT;
-            if (get_key == 'a') *action_mov = LEFT;
+        case SNAKE_UP:
+            if (get_key == 'd') *action_mov = SNAKE_RIGHT;
+            if (get_key == 'a') *action_mov = SNAKE_LEFT;
             break;
 
-        case LEFT:
-            if (get_key == 'w') *action_mov = UP;
-            if (get_key == 's') *action_mov = DOWN;
+        case SNAKE_LEFT:
+            if (get_key == 'w') *action_mov = SNAKE_UP;
+            if (get_key == 's') *action_mov = SNAKE_DOWN;
             break;
 
-        case DOWN:
-            if (get_key == 'd') *action_mov = RIGHT;
-            if (get_key == 'a') *action_mov = LEFT;
+        case SNAKE_DOWN:
+            if (get_key == 'd') *action_mov = SNAKE_RIGHT;
+            if (get_key == 'a') *action_mov = SNAKE_LEFT;
             break;
     }
     return;
 }
 
 //
-// drawSnake
+// snakeDraw
 //
-void drawSnake(SnakeObject* snake, SNAKE_ACTION moviment) {
+void snakeDraw(SnakeObject* snake, SNAKE_ACTION moviment) {
     SnakeObject *temp = snake, *snake_copy = NULL;
     unsigned head_x, head_y;
 
     switch (moviment) {
-        case RIGHT:
-            snake_copy = copySnake(snake);
+        case SNAKE_RIGHT:
+            snake_copy = snakeCopy(snake);
 
             while (temp != NULL) {
                 if (temp->is_head) {
@@ -126,8 +126,8 @@ void drawSnake(SnakeObject* snake, SNAKE_ACTION moviment) {
             free(snake_copy);
             break;
 
-        case UP:
-            snake_copy = copySnake(snake);
+        case SNAKE_UP:
+            snake_copy = snakeCopy(snake);
 
             while (temp != NULL) {
                 if (temp->is_head) {
@@ -144,8 +144,8 @@ void drawSnake(SnakeObject* snake, SNAKE_ACTION moviment) {
             free(snake_copy);
             break;
 
-        case DOWN:
-            snake_copy = copySnake(snake);
+        case SNAKE_DOWN:
+            snake_copy = snakeCopy(snake);
 
             while (temp != NULL) {
                 if (temp->is_head) {
@@ -162,8 +162,8 @@ void drawSnake(SnakeObject* snake, SNAKE_ACTION moviment) {
             free(snake_copy);
             break;
 
-        case LEFT:
-            snake_copy = copySnake(snake);
+        case SNAKE_LEFT:
+            snake_copy = snakeCopy(snake);
 
             while (temp != NULL) {
                 if (temp->is_head) {

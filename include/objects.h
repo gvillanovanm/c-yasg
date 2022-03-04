@@ -7,12 +7,12 @@
 #define X_LIMITS 20  //40
 #define Y_LIMITS 60  //100
 
-typedef struct appleObject_t {
+typedef struct objectApple_t {
     unsigned x;
     unsigned y;
-} appleObject;
+} objectApple;
 
-void drawObjectBackground(unsigned, unsigned);
-void sortObjectApple(unsigned*, unsigned*);
+void objectDrawBackground(unsigned, unsigned);
+void objectSortApple(unsigned*, unsigned*);
 
 #endif  // __SNAKE_OBJECTS

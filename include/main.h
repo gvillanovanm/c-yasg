@@ -12,9 +12,9 @@
 #define GAME_SYMBOL_OF_WALL "#"
 
 typedef enum GAME_STATE_e {
-    INIT_GAME,
-    RUN_GAME,
-    END_GAME
+    GAME_INIT,
+    GAME_RUN,
+    GAME_END
 } GAME_STATE;
 
 void gameSetup(void);

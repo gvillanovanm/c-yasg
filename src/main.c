@@ -12,35 +12,35 @@ void gameSetup(void) {
 
 int main(void) {
     // Main variables
-    GAME_STATE game_state = INIT_GAME;
+    GAME_STATE game_state = GAME_INIT;
 
-    SNAKE_ACTION action_mov = RIGHT;
+    SNAKE_ACTION snake_action = SNAKE_RIGHT;
     SnakeObject *snake = NULL;
 
-    appleObject apple;
+    objectApple apple;
 
     // Loop
     for (;;) {
         switch (game_state) {
-            case INIT_GAME:
+            case GAME_INIT:
                 gameSetup();
-                sortObjectApple(&apple.x, &apple.y);
+                objectSortApple(&apple.x, &apple.y);
 
-                if (!initSnake(&snake))
-                    game_state = END_GAME;
+                if (!snakeInit(&snake))
+                    game_state = GAME_END;
                 else
-                    game_state = RUN_GAME;
+                    game_state = GAME_RUN;
                 break;
 
-            case RUN_GAME:
-                drawObjectBackground(apple.x, apple.y);
+            case GAME_RUN:
+                objectDrawBackground(apple.x, apple.y);
 
-                drawSnake(snake, action_mov);
-                updateSnakeAction(&action_mov);
+                snakeDraw(snake, snake_action);
+                snakeUpdateAction(&snake_action);
                 // game_state = UPDATE_SNAKE;
                 break;
 
-            case END_GAME:
+            case GAME_END:
                 free(snake);
                 endwin();
                 return -1;

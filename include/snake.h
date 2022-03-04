@@ -6,10 +6,10 @@
 #define INITIAL_SNAKE_LENGTH 3
 
 typedef enum SNAKE_ACTION_e {
-    UP,
-    DOWN,
-    LEFT,
-    RIGHT,
+    SNAKE_UP,
+    SNAKE_DOWN,
+    SNAKE_LEFT,
+    SNAKE_RIGHT,
 } SNAKE_ACTION;
 
 typedef struct SnakeObject_t {
@@ -21,11 +21,11 @@ typedef struct SnakeObject_t {
 } SnakeObject;
 
 // Private functions
-SnakeObject* copySnake(SnakeObject*);
+SnakeObject* snakeCopy(SnakeObject*);
 
 // Public functions
-bool initSnake(SnakeObject**);
-void updateSnakeAction(SNAKE_ACTION*);
-void drawSnake(SnakeObject*, SNAKE_ACTION);
+bool snakeInit(SnakeObject**);
+void snakeUpdateAction(SNAKE_ACTION*);
+void snakeDraw(SnakeObject*, SNAKE_ACTION);
 
 #endif  // __SNAKE_MOVEMENT
