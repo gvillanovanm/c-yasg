@@ -3,7 +3,16 @@
 
 #include <stdbool.h>
 
-#define INITIAL_SNAKE_LENGTH 3
+#define SNAKE_INITIAL_LENGTH 3
+
+#define SNAKE_UP_UPPER 'W'
+#define SNAKE_UP_LOW 'w'
+#define SNAKE_DOWN_UPPER 'S'
+#define SNAKE_DOWN_LOW 's'
+#define SNAKE_LEFT_UPPER 'A'
+#define SNAKE_LEFT_LOW 'a'
+#define SNAKE_RIGHT_UPPER 'D'
+#define SNAKE_RIGHT_LOW 'd'
 
 typedef enum SNAKE_ACTION_e {
     SNAKE_UP,

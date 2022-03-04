@@ -46,19 +46,19 @@ SnakeObject* snakeCopy(SnakeObject* snake) {
 bool snakeInit(SnakeObject** snake) {
     SnakeObject* temp = NULL;
 
-    for (int i = 0; i < INITIAL_SNAKE_LENGTH; i++) {
+    for (int i = 0; i < SNAKE_INITIAL_LENGTH; i++) {
         temp = malloc(sizeof(SnakeObject));
 
         if (temp == NULL) return false;
 
-        if (i == INITIAL_SNAKE_LENGTH - 1)
+        if (i == SNAKE_INITIAL_LENGTH - 1)
             temp->is_head = true;
         else
             temp->is_head = false;
 
         temp->x = ((Y_LIMITS - 1) / 2) + i;
         temp->y = ((X_LIMITS - 1) / 2);
-        temp->size = INITIAL_SNAKE_LENGTH;
+        temp->size = SNAKE_INITIAL_LENGTH;
 
         temp->next = *snake;
         *snake = temp;
@@ -78,23 +78,23 @@ void snakeUpdateAction(SNAKE_ACTION* action_mov) {
 
     switch (*action_mov) {
         case SNAKE_RIGHT:
-            if (get_key == 'w') *action_mov = SNAKE_UP;
-            if (get_key == 's') *action_mov = SNAKE_DOWN;
+            if (get_key == SNAKE_UP_UPPER || get_key == SNAKE_UP_LOW) *action_mov = SNAKE_UP;
+            if (get_key == SNAKE_DOWN_UPPER || get_key == SNAKE_DOWN_LOW) *action_mov = SNAKE_DOWN;
             break;
 
         case SNAKE_UP:
-            if (get_key == 'd') *action_mov = SNAKE_RIGHT;
-            if (get_key == 'a') *action_mov = SNAKE_LEFT;
+            if (get_key == SNAKE_RIGHT_UPPER || get_key == SNAKE_RIGHT_LOW) *action_mov = SNAKE_RIGHT;
+            if (get_key == SNAKE_LEFT_UPPER || get_key == SNAKE_LEFT_LOW) *action_mov = SNAKE_LEFT;
             break;
 
         case SNAKE_LEFT:
-            if (get_key == 'w') *action_mov = SNAKE_UP;
-            if (get_key == 's') *action_mov = SNAKE_DOWN;
+            if (get_key == SNAKE_UP_UPPER || get_key == SNAKE_UP_LOW) *action_mov = SNAKE_UP;
+            if (get_key == SNAKE_DOWN_UPPER || get_key == SNAKE_DOWN_LOW) *action_mov = SNAKE_DOWN;
             break;
 
         case SNAKE_DOWN:
-            if (get_key == 'd') *action_mov = SNAKE_RIGHT;
-            if (get_key == 'a') *action_mov = SNAKE_LEFT;
+            if (get_key == SNAKE_RIGHT_UPPER || get_key == SNAKE_RIGHT_LOW) *action_mov = SNAKE_RIGHT;
+            if (get_key == SNAKE_LEFT_UPPER || get_key == SNAKE_LEFT_LOW) *action_mov = SNAKE_LEFT;
             break;
     }
     return;
