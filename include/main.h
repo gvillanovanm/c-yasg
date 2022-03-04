@@ -8,6 +8,7 @@
 
 #define GAME_SPEED 100
 #define GAME_SYMBOL_OF_APPLE "o"
+#define GAME_SYMBOL_OF_HEAD_SNAKE "@"
 #define GAME_SYMBOL_OF_SNAKE "*"
 #define GAME_SYMBOL_OF_WALL "#"
 

@@ -115,12 +115,13 @@ void snakeDraw(SnakeObject* snake, SNAKE_ACTION moviment) {
                 if (temp->is_head) {
                     temp->x++;
                     temp->y = temp->y;
+                    mvprintw(temp->y, temp->x, GAME_SYMBOL_OF_HEAD_SNAKE);
                 } else {
                     temp->x = snake_copy->x;
                     temp->y = snake_copy->y;
                     snake_copy = snake_copy->next;
+                    mvprintw(temp->y, temp->x, GAME_SYMBOL_OF_SNAKE);
                 }
-                mvprintw(temp->y, temp->x, GAME_SYMBOL_OF_SNAKE);
                 temp = temp->next;
             }
             free(snake_copy);
@@ -133,12 +134,13 @@ void snakeDraw(SnakeObject* snake, SNAKE_ACTION moviment) {
                 if (temp->is_head) {
                     temp->x = temp->x;
                     temp->y--;
+                    mvprintw(temp->y, temp->x, GAME_SYMBOL_OF_HEAD_SNAKE);
                 } else {
                     temp->x = snake_copy->x;
                     temp->y = snake_copy->y;
                     snake_copy = snake_copy->next;
+                    mvprintw(temp->y, temp->x, GAME_SYMBOL_OF_SNAKE);
                 }
-                mvprintw(temp->y, temp->x, GAME_SYMBOL_OF_SNAKE);
                 temp = temp->next;
             }
             free(snake_copy);
@@ -151,12 +153,14 @@ void snakeDraw(SnakeObject* snake, SNAKE_ACTION moviment) {
                 if (temp->is_head) {
                     temp->x = temp->x;
                     temp->y++;
+                    mvprintw(temp->y, temp->x, GAME_SYMBOL_OF_HEAD_SNAKE);
+
                 } else {
                     temp->x = snake_copy->x;
                     temp->y = snake_copy->y;
                     snake_copy = snake_copy->next;
+                    mvprintw(temp->y, temp->x, GAME_SYMBOL_OF_SNAKE);
                 }
-                mvprintw(temp->y, temp->x, GAME_SYMBOL_OF_SNAKE);
                 temp = temp->next;
             }
             free(snake_copy);
@@ -169,15 +173,19 @@ void snakeDraw(SnakeObject* snake, SNAKE_ACTION moviment) {
                 if (temp->is_head) {
                     temp->x--;
                     temp->y = temp->y;
+                    mvprintw(temp->y, temp->x, GAME_SYMBOL_OF_HEAD_SNAKE);
                 } else {
                     temp->x = snake_copy->x;
                     temp->y = snake_copy->y;
                     snake_copy = snake_copy->next;
+                    mvprintw(temp->y, temp->x, GAME_SYMBOL_OF_SNAKE);
                 }
-                mvprintw(temp->y, temp->x, GAME_SYMBOL_OF_SNAKE);
                 temp = temp->next;
             }
             free(snake_copy);
             break;
     }
+
+    // check if get the apple OR colide with wall
+    // should return a status: SNAKE_GET_APPLE, SNAKE_HIT_THE_WALL, SNAKE_CONTINUE
 }
