@@ -21,6 +21,12 @@ typedef enum SNAKE_ACTION_e {
     SNAKE_RIGHT,
 } SNAKE_ACTION;
 
+typedef enum SNAKE_HIT_e {
+    SNAKE_HIT_APPLE,
+    SNAKE_HIT_WALL,
+    SNAKE_HIT_NOTHING,
+} SNAKE_HIT;
+
 typedef struct SnakeObject_t {
     bool is_head;
     unsigned x;
@@ -31,10 +37,11 @@ typedef struct SnakeObject_t {
 
 // Private functions
 SnakeObject* snakeCopy(SnakeObject*);
+SNAKE_HIT snakeHitDetection(unsigned, unsigned, SNAKE_ACTION);
 
 // Public functions
 bool snakeInit(SnakeObject**);
 void snakeUpdateAction(SNAKE_ACTION*);
-void snakeDraw(SnakeObject*, SNAKE_ACTION);
+SNAKE_HIT snakeUpdateObject(SnakeObject*, SNAKE_ACTION);
 
 #endif  // __SNAKE_MOVEMENT

@@ -9,6 +9,7 @@
         "unistd.h": "c",
         "objects.h": "c",
         "main.h": "c",
-        "movement.h": "c"
+        "movement.h": "c",
+        "snake.h": "c"
     }
 }

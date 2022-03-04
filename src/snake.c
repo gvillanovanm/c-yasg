@@ -36,6 +36,30 @@ SnakeObject* snakeCopy(SnakeObject* snake) {
     return listhead;
 }
 
+SNAKE_HIT snakeHitDetection(unsigned head_snake_x, unsigned head_snake_y, SNAKE_ACTION movement) {
+    // TODO: detect body
+
+    if (game_apple.y == head_snake_x && game_apple.x == head_snake_y) {
+        game_user.score++;
+        sprintf(msg_score, "\nScore: %u", game_user.score);
+        return SNAKE_HIT_APPLE;
+    }
+
+    switch (movement) {
+        case SNAKE_RIGHT:
+        case SNAKE_LEFT:
+            if (head_snake_x == OBJECT_RECT_Y_LIMITS - 1 || head_snake_x == 0)
+                return SNAKE_HIT_WALL;
+
+        case SNAKE_UP:
+        case SNAKE_DOWN:
+            if (head_snake_y == OBJECT_RECT_X_LIMITS - 1 || head_snake_y == 0)
+                return SNAKE_HIT_WALL;
+    }
+
+    return SNAKE_HIT_NOTHING;
+}
+
 /* --------------------------------------------------------*/
 // Public functions
 /* --------------------------------------------------------*/
@@ -56,8 +80,8 @@ bool snakeInit(SnakeObject** snake) {
         else
             temp->is_head = false;
 
-        temp->x = ((Y_LIMITS - 1) / 2) + i;
-        temp->y = ((X_LIMITS - 1) / 2);
+        temp->x = ((OBJECT_RECT_Y_LIMITS - 1) / 2) + i;
+        temp->y = ((OBJECT_RECT_X_LIMITS - 1) / 2);
         temp->size = SNAKE_INITIAL_LENGTH;
 
         temp->next = *snake;
@@ -101,11 +125,11 @@ void snakeUpdateAction(SNAKE_ACTION* action_mov) {
 }
 
 //
-// snakeDraw
+// snakeUpdateObject
 //
-void snakeDraw(SnakeObject* snake, SNAKE_ACTION moviment) {
+SNAKE_HIT snakeUpdateObject(SnakeObject* snake, SNAKE_ACTION moviment) {
+    SNAKE_HIT snake_hit = SNAKE_HIT_NOTHING;
     SnakeObject *temp = snake, *snake_copy = NULL;
-    unsigned head_x, head_y;
 
     switch (moviment) {
         case SNAKE_RIGHT:
@@ -116,6 +140,7 @@ void snakeDraw(SnakeObject* snake, SNAKE_ACTION moviment) {
                     temp->x++;
                     temp->y = temp->y;
                     mvprintw(temp->y, temp->x, GAME_SYMBOL_OF_HEAD_SNAKE);
+                    snake_hit = snakeHitDetection(temp->x, temp->y, moviment);
                 } else {
                     temp->x = snake_copy->x;
                     temp->y = snake_copy->y;
@@ -135,6 +160,7 @@ void snakeDraw(SnakeObject* snake, SNAKE_ACTION moviment) {
                     temp->x = temp->x;
                     temp->y--;
                     mvprintw(temp->y, temp->x, GAME_SYMBOL_OF_HEAD_SNAKE);
+                    snake_hit = snakeHitDetection(temp->x, temp->y, moviment);
                 } else {
                     temp->x = snake_copy->x;
                     temp->y = snake_copy->y;
@@ -154,12 +180,13 @@ void snakeDraw(SnakeObject* snake, SNAKE_ACTION moviment) {
                     temp->x = temp->x;
                     temp->y++;
                     mvprintw(temp->y, temp->x, GAME_SYMBOL_OF_HEAD_SNAKE);
-
+                    snake_hit = snakeHitDetection(temp->x, temp->y, moviment);
                 } else {
                     temp->x = snake_copy->x;
                     temp->y = snake_copy->y;
                     snake_copy = snake_copy->next;
                     mvprintw(temp->y, temp->x, GAME_SYMBOL_OF_SNAKE);
+                    // if(snake_hit == SNAKE_HIT_APPLE) add node
                 }
                 temp = temp->next;
             }
@@ -174,6 +201,7 @@ void snakeDraw(SnakeObject* snake, SNAKE_ACTION moviment) {
                     temp->x--;
                     temp->y = temp->y;
                     mvprintw(temp->y, temp->x, GAME_SYMBOL_OF_HEAD_SNAKE);
+                    snake_hit = snakeHitDetection(temp->x, temp->y, moviment);
                 } else {
                     temp->x = snake_copy->x;
                     temp->y = snake_copy->y;
@@ -186,6 +214,5 @@ void snakeDraw(SnakeObject* snake, SNAKE_ACTION moviment) {
             break;
     }
 
-    // check if get the apple OR colide with wall
-    // should return a status: SNAKE_GET_APPLE, SNAKE_HIT_THE_WALL, SNAKE_CONTINUE
+    return snake_hit;
 }
