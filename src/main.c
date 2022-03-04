@@ -46,6 +46,7 @@ int main(void) {
 
                 if (game_user.status_hit == SNAKE_HIT_APPLE) {
                     mvprintw(OBJECT_RECT_Y_LIMITS - 40, 0, msg_score);
+                    objectSortApple(&game_apple.x, &game_apple.y);
                     // snakeAddNode()
                 } else if (game_user.status_hit == SNAKE_HIT_WALL)
                     game_state = GAME_OVER;
