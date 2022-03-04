@@ -1,9 +1,9 @@
 #include "main.h"
 
-#include "movement.h"
 #include "objects.h"
+#include "snake.h"
 
-void snakeSetup(void) {
+void gameSetup(void) {
     srand(time(NULL));
     initscr();
     curs_set(0);  // Delete cursor
@@ -12,30 +12,31 @@ void snakeSetup(void) {
 
 int main(void) {
     // Main variables
-    GAME_STATE game_state = INIT;
-    ACTION_STATE action_mov = RIGHT;
-    objSnake *snake = NULL;
+    GAME_STATE game_state = INIT_GAME;
 
-    unsigned x_apple = 0,
-             y_apple = 0;
+    SNAKE_ACTION action_mov = RIGHT;
+    SnakeObject *snake = NULL;
+
+    appleObject apple;
 
     // Loop
     for (;;) {
         switch (game_state) {
-            case INIT:
-                snakeSetup();
-                sortApple(&x_apple, &y_apple);
+            case INIT_GAME:
+                gameSetup();
+                sortObjectApple(&apple.x, &apple.y);
 
                 if (!initSnake(&snake))
                     game_state = END_GAME;
                 else
-                    game_state = DRAW_SNAKE;
+                    game_state = RUN_GAME;
                 break;
 
-            case DRAW_SNAKE:
-                drawBackground(x_apple, y_apple);
-                updateSnake(snake, action_mov);
-                updateMovement(&action_mov);
+            case RUN_GAME:
+                drawObjectBackground(apple.x, apple.y);
+
+                drawSnake(snake, action_mov);
+                updateSnakeAction(&action_mov);
                 // game_state = UPDATE_SNAKE;
                 break;
 
@@ -46,7 +47,7 @@ int main(void) {
         }
 
         refresh();
-        usleep(SPEED * 1000);
+        usleep(GAME_SPEED * 1000);
     }
 
     // End game

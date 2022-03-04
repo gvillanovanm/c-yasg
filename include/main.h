@@ -6,18 +6,17 @@
 #include <time.h>
 #include <unistd.h>
 
-#define SPEED 100
-#define INITIAL_SNAKE_LENGTH 3
-#define SYMBOL_OF_APPLE "o"
-#define SYMBOL_OF_SNAKE "*"
-#define SYMBOL_OF_WALL "#"
+#define GAME_SPEED 100
+#define GAME_SYMBOL_OF_APPLE "o"
+#define GAME_SYMBOL_OF_SNAKE "*"
+#define GAME_SYMBOL_OF_WALL "#"
 
 typedef enum GAME_STATE_e {
-    INIT,
-    DRAW_SNAKE,
+    INIT_GAME,
+    RUN_GAME,
     END_GAME
 } GAME_STATE;
 
-void snakeSetup(void);
+void gameSetup(void);
 
 #endif  // __SNAKE_MAIN
