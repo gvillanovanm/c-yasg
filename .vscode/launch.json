@@ -15,7 +15,7 @@
             "externalConsole": false,
             "MIMode": "gdb",
             // "program": "${fileDirname}/build/${fileBasenameNoExtension}",
-            "program": "snake",
+            "program": "/home/gvillanovanm/Github/c/workspace/my-snake-game/snake",
             "linux": {
                 "miDebuggerPath": "/usr/bin/gdb",
             },

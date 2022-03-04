@@ -34,7 +34,6 @@ int main(void) {
 
             case DRAW_SNAKE:
                 drawBackground(x_apple, y_apple);
-                printSnake(snake);
                 updateSnake(snake, action_mov);
                 updateMovement(&action_mov);
                 // game_state = UPDATE_SNAKE;

@@ -6,7 +6,6 @@
 
 #define X_LIMITS 20  //40
 #define Y_LIMITS 60  //100
-#define INITIAL_SNAKE_LENGTH 3
 
 void drawBackground(unsigned, unsigned);
 void sortApple(unsigned* x_apple, unsigned* y_apple);

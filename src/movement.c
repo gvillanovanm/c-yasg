@@ -21,21 +21,13 @@ bool initSnake(objSnake** snake) {
 
         temp->snake_x = ((Y_LIMITS - 1) / 2) + i;
         temp->snake_y = ((X_LIMITS - 1) / 2);
+        temp->snake_size = INITIAL_SNAKE_LENGTH;
 
         temp->next = *snake;
         *snake = temp;
     }
 
     return true;
-}
-
-void printSnake(objSnake* snake) {
-    objSnake* temp = snake;
-
-    while (temp != NULL) {
-        mvprintw(temp->snake_y, temp->snake_x, SYMBOL_OF_SNAKE);
-        temp = temp->next;
-    }
 }
 
 void updateMovement(ACTION_STATE* action_mov) {
@@ -68,47 +60,104 @@ void updateMovement(ACTION_STATE* action_mov) {
     return;
 }
 
+objSnake* copySnake(objSnake* snake) {
+    objSnake *temp = NULL, *listhead = NULL, *temp_snake = snake;
+
+    temp = malloc(sizeof(objSnake));
+    listhead = temp;
+
+    if (temp == NULL)
+        return NULL;
+
+    while (temp_snake != NULL) {
+        temp->snake_x = temp_snake->snake_x;
+        temp->snake_y = temp_snake->snake_y;
+
+        temp->next = malloc(sizeof(objSnake));
+        temp = temp->next;
+
+        temp_snake = temp_snake->next;
+    }
+    temp->next = NULL;
+
+    return listhead;
+}
+
 void updateSnake(objSnake* snake, ACTION_STATE moviment) {
-    objSnake* temp = snake;
+    objSnake *temp = snake, *snake_copy = NULL;
+    unsigned head_x, head_y;
 
     switch (moviment) {
         case RIGHT:
+            snake_copy = copySnake(snake);
+
             while (temp != NULL) {
-                temp->snake_x++;
-                temp->snake_y = snake->snake_y;
+                if (temp->is_head) {
+                    temp->snake_x++;
+                    temp->snake_y = temp->snake_y;
+                } else {
+                    temp->snake_x = snake_copy->snake_x;
+                    temp->snake_y = snake_copy->snake_y;
+                    snake_copy = snake_copy->next;
+                }
                 mvprintw(temp->snake_y, temp->snake_x, SYMBOL_OF_SNAKE);
                 temp = temp->next;
             }
+            free(snake_copy);
             break;
 
         case UP:
+            snake_copy = copySnake(snake);
+
             while (temp != NULL) {
-                temp->snake_x = snake->snake_x;
-                temp->snake_y--;
+                if (temp->is_head) {
+                    temp->snake_x = temp->snake_x;
+                    temp->snake_y--;
+                } else {
+                    temp->snake_x = snake_copy->snake_x;
+                    temp->snake_y = snake_copy->snake_y;
+                    snake_copy = snake_copy->next;
+                }
                 mvprintw(temp->snake_y, temp->snake_x, SYMBOL_OF_SNAKE);
                 temp = temp->next;
             }
+            free(snake_copy);
             break;
 
         case DOWN:
+            snake_copy = copySnake(snake);
+
             while (temp != NULL) {
-                temp->snake_x = snake->snake_x;
-                temp->snake_y++;
+                if (temp->is_head) {
+                    temp->snake_x = temp->snake_x;
+                    temp->snake_y++;
+                } else {
+                    temp->snake_x = snake_copy->snake_x;
+                    temp->snake_y = snake_copy->snake_y;
+                    snake_copy = snake_copy->next;
+                }
                 mvprintw(temp->snake_y, temp->snake_x, SYMBOL_OF_SNAKE);
                 temp = temp->next;
             }
+            free(snake_copy);
             break;
 
         case LEFT:
+            snake_copy = copySnake(snake);
+
             while (temp != NULL) {
-                temp->snake_x--;
-                temp->snake_y = snake->snake_y;
+                if (temp->is_head) {
+                    temp->snake_x--;
+                    temp->snake_y = temp->snake_y;
+                } else {
+                    temp->snake_x = snake_copy->snake_x;
+                    temp->snake_y = snake_copy->snake_y;
+                    snake_copy = snake_copy->next;
+                }
                 mvprintw(temp->snake_y, temp->snake_x, SYMBOL_OF_SNAKE);
                 temp = temp->next;
             }
+            free(snake_copy);
             break;
-
-        default:
-            return;
     }
 }

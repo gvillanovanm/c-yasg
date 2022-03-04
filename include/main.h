@@ -7,10 +7,10 @@
 #include <unistd.h>
 
 #define SPEED 100
-#define INITAL_SNAKE_LENGTH 3
-#define SYMBOL_OF_APPLE "M"
-#define SYMBOL_OF_SNAKE "o"
-#define SYMBOL_OF_WALL "0"
+#define INITIAL_SNAKE_LENGTH 3
+#define SYMBOL_OF_APPLE "o"
+#define SYMBOL_OF_SNAKE "*"
+#define SYMBOL_OF_WALL "#"
 
 typedef enum GAME_STATE_e {
     INIT,
