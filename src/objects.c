@@ -28,3 +28,20 @@ void objectSortApple(unsigned *x_apple, unsigned *y_apple) {
     *y_apple = rand() % (OBJECT_RECT_Y_LIMITS - 1);
     if (*y_apple == 0) *y_apple++;
 }
+
+void objectDrawCowsay(void) {
+    char eyes = 'o';
+    char upperbubble = '\\';
+    char lowerbubble = '\\';
+    char str[150];
+
+    sprintf(str,
+            "\n\n----------\n        %c   ^__^\n\
+         %c  (%c%c)\\_______\n\
+            (__)\\       )\\/\\\n\
+                ||----w |\n\
+                ||     ||\n",
+            upperbubble, lowerbubble, eyes, eyes);
+
+    mvprintw(OBJECT_RECT_Y_LIMITS - 40, 0, str);
+}

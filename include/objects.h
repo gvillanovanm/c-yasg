@@ -14,5 +14,6 @@ typedef struct ObjectApple_t {
 
 void objectDrawBackground(unsigned, unsigned);
 void objectSortApple(unsigned*, unsigned*);
+void objectDrawCowsay(void);
 
 #endif  // __SNAKE_OBJECTS

@@ -12,19 +12,7 @@ void gameSetup(void) {
     game_user.score = 0;
     game_user.status_hit = SNAKE_HIT_NOTHING;
 
-    // sprintf(msg_score, "\nScore: %u", game_user.score);
-    char eyes = 'o';
-    char upperbubble = '\\';
-    char lowerbubble = '\\';
-    sprintf(msg_score,
-            "\n\n----------\n        %c   ^__^\n\
-         %c  (%c%c)\\_______\n\
-            (__)\\       )\\/\\\n\
-                ||----w |\n\
-                ||     ||\n",
-            upperbubble, lowerbubble, eyes, eyes);
-
-    mvprintw(OBJECT_RECT_Y_LIMITS - 40, 0, msg_score);
+    objectDrawCowsay();
 }
 
 int main(void) {

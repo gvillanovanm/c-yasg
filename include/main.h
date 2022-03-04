@@ -31,7 +31,7 @@ typedef struct GameUserStatus_T {
 // Global variables
 ObjectApple game_apple;
 GameUserStatus game_user;
-char msg_score[200];
+char msg_score[15];
 
 // Public Functions
 void gameSetup(void);
