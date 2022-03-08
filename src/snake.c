@@ -186,7 +186,6 @@ SNAKE_HIT snakeUpdateObject(SnakeObject* snake, SNAKE_ACTION moviment) {
                     temp->y = snake_copy->y;
                     snake_copy = snake_copy->next;
                     mvprintw(temp->y, temp->x, GAME_SYMBOL_OF_SNAKE);
-                    // if(snake_hit == SNAKE_HIT_APPLE) add node
                 }
                 temp = temp->next;
             }
@@ -215,4 +214,26 @@ SNAKE_HIT snakeUpdateObject(SnakeObject* snake, SNAKE_ACTION moviment) {
     }
 
     return snake_hit;
+}
+
+//
+// snakeAddNode
+//
+bool snakeAddNode(SnakeObject* snake) {
+    SnakeObject *temp = snake, *new_node = NULL, *last = NULL;
+
+    new_node = malloc(sizeof(SnakeObject));
+
+    if (new_node == NULL)
+        return false;
+
+    while (temp != NULL) {
+        last = temp;
+        temp = temp->next;
+    }
+
+    last->next = new_node;
+    new_node->next = NULL;
+
+    return true;
 }

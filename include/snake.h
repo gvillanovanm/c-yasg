@@ -43,5 +43,6 @@ SNAKE_HIT snakeHitDetection(unsigned, unsigned, SNAKE_ACTION);
 bool snakeInit(SnakeObject**);
 void snakeUpdateAction(SNAKE_ACTION*);
 SNAKE_HIT snakeUpdateObject(SnakeObject*, SNAKE_ACTION);
+bool snakeAddNode(SnakeObject*);
 
 #endif  // __SNAKE_MOVEMENT

@@ -46,7 +46,8 @@ int main(void) {
                 if (game_user.status_hit == SNAKE_HIT_APPLE) {
                     mvprintw(OBJECT_RECT_Y_LIMITS - 40, 0, msg_score);
                     objectSortApple(&game_apple.x, &game_apple.y);
-                    // snakeAddNode()
+                    if (!snakeAddNode(snake))
+                        game_state = GAME_ERROR;
                 } else if (game_user.status_hit == SNAKE_HIT_WALL)
                     game_state = GAME_OVER;
 
@@ -56,11 +57,11 @@ int main(void) {
                 for (int k = 0; k < 5; k++) {
                     clear();
                     refresh();
-                    usleep(GAME_SPEED * 2000);
+                    usleep(100 * 2000);
 
                     mvaddstr(OBJECT_RECT_Y_LIMITS - 50, OBJECT_RECT_Y_LIMITS / 2 - 8, "GAME OVER");
                     refresh();
-                    usleep(GAME_SPEED * 2000);
+                    usleep(100 * 2000);
                 }
 
                 free(snake);
