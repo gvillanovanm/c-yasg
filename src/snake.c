@@ -97,7 +97,7 @@ bool snakeInit(SnakeObject** snake) {
 void snakeUpdateAction(SNAKE_ACTION* action_mov) {
     char get_key;
 
-    timeout(1);
+    timeout(.1);
     get_key = getch();
 
     switch (*action_mov) {

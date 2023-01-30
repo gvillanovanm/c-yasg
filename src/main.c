@@ -18,7 +18,6 @@ void gameSetup(void) {
 int main(void) {
     // Main variables
     GAME_STATE game_state = GAME_INIT;
-
     SNAKE_ACTION snake_action = SNAKE_RIGHT;
     SnakeObject *snake = NULL;
 
@@ -27,7 +26,7 @@ int main(void) {
         switch (game_state) {
             case GAME_INIT:
                 gameSetup();
-                //gameMenu(velocidade, simbol of wall, simbol of head, simbol of apple);
+                // gameMenu(velocidade, simbol of wall, simbol of head, simbol of apple);
 
                 objectSortApple(&game_apple.x, &game_apple.y);
 

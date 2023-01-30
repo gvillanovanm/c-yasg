@@ -2,9 +2,13 @@
 
 #include "main.h"
 
+//
+//
+//
 void objectDrawBackground(unsigned x_apple, unsigned y_apple) {
     int i, j;
 
+    // this algorithm can be better:
     move(0, 0);
     for (i = 0; i < OBJECT_RECT_X_LIMITS; i++) {
         for (j = 0; j < OBJECT_RECT_Y_LIMITS; j++) {
@@ -22,11 +26,13 @@ void objectDrawBackground(unsigned x_apple, unsigned y_apple) {
 }
 
 void objectSortApple(unsigned *x_apple, unsigned *y_apple) {
+    // TODO: sort region out of snake
+
     *x_apple = rand() % (OBJECT_RECT_X_LIMITS - 1);
-    if (*x_apple == 0) *x_apple++;
+    if (*x_apple == 0) *x_apple = *x_apple + 2;
 
     *y_apple = rand() % (OBJECT_RECT_Y_LIMITS - 1);
-    if (*y_apple == 0) *y_apple++;
+    if (*y_apple == 0) *y_apple = *y_apple + 2;
 }
 
 void objectDrawCowsay(void) {
