@@ -36,6 +36,9 @@ SnakeObject* snakeCopy(SnakeObject* snake) {
     return listhead;
 }
 
+//
+//
+//
 SNAKE_HIT snakeHitDetection(unsigned head_snake_x, unsigned head_snake_y, SNAKE_ACTION movement) {
     // TODO: detect body
 
@@ -138,7 +141,6 @@ SNAKE_HIT snakeUpdateObject(SnakeObject* snake, SNAKE_ACTION moviment) {
             while (temp != NULL) {
                 if (temp->is_head) {
                     temp->x++;
-                    temp->y = temp->y;
                     mvprintw(temp->y, temp->x, GAME_SYMBOL_OF_HEAD_SNAKE);
                     snake_hit = snakeHitDetection(temp->x, temp->y, moviment);
                 } else {
@@ -157,7 +159,6 @@ SNAKE_HIT snakeUpdateObject(SnakeObject* snake, SNAKE_ACTION moviment) {
 
             while (temp != NULL) {
                 if (temp->is_head) {
-                    temp->x = temp->x;
                     temp->y--;
                     mvprintw(temp->y, temp->x, GAME_SYMBOL_OF_HEAD_SNAKE);
                     snake_hit = snakeHitDetection(temp->x, temp->y, moviment);
@@ -177,7 +178,6 @@ SNAKE_HIT snakeUpdateObject(SnakeObject* snake, SNAKE_ACTION moviment) {
 
             while (temp != NULL) {
                 if (temp->is_head) {
-                    temp->x = temp->x;
                     temp->y++;
                     mvprintw(temp->y, temp->x, GAME_SYMBOL_OF_HEAD_SNAKE);
                     snake_hit = snakeHitDetection(temp->x, temp->y, moviment);
@@ -198,7 +198,6 @@ SNAKE_HIT snakeUpdateObject(SnakeObject* snake, SNAKE_ACTION moviment) {
             while (temp != NULL) {
                 if (temp->is_head) {
                     temp->x--;
-                    temp->y = temp->y;
                     mvprintw(temp->y, temp->x, GAME_SYMBOL_OF_HEAD_SNAKE);
                     snake_hit = snakeHitDetection(temp->x, temp->y, moviment);
                 } else {

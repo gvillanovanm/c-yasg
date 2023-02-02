@@ -1,6 +1,9 @@
 snake: clean
 	gcc src/main.c src/objects.c src/snake.c -g -lncurses -I./include -o snake
 
+snake_with_compiled_ncurses:
+	gcc -static src/main.c src/objects.c src/snake.c -g -I./include -L/home/gvillanovanm/Github/c/workspace/ncurses/lib/ -lncurses -o snake
+
 snake_stripped: clean
 	gcc src/main.c src/objects.c src/snake.c -lncurses -I./include -o snake
 	

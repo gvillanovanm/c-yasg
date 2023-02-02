@@ -26,7 +26,7 @@ int main(void) {
         switch (game_state) {
             case GAME_INIT:
                 gameSetup();
-                // gameMenu(velocidade, simbol of wall, simbol of head, simbol of apple);
+                // gameMenu(speed, symbols definition);
 
                 objectSortApple(&game_apple.x, &game_apple.y);
 
@@ -63,12 +63,14 @@ int main(void) {
                     usleep(100 * 2000);
                 }
 
+                // to-do: recursive free
                 free(snake);
                 endwin();
 
                 return 0;
 
             case GAME_ERROR:
+                // to-do: recursive free
                 free(snake);
                 endwin();
                 return -1;
@@ -77,7 +79,9 @@ int main(void) {
         usleep(GAME_SPEED * 1000);
     }
 
-    // End game
+    // End game: it never reaches here
+
+    // to-do: recursive free
     free(snake);
     endwin();
 
