@@ -1,34 +1,29 @@
 #include "main.h"
 
+#include "game.h"
 #include "objects.h"
 #include "snake.h"
 
-void gameSetup(void) {
-    srand(time(NULL));
-    initscr();
-    curs_set(0);  // Delete cursor
-    noecho();     // Not propagate button pressed
-
-    game_user.score = 0;
-    game_user.status_hit = SNAKE_HIT_NOTHING;
-
-    objectDrawCowsay();
-}
-
 int main(void) {
-    // Main variables
+    // game variables
     GAME_STATE game_state = GAME_INIT;
-    SNAKE_ACTION snake_action = SNAKE_RIGHT;
+    GameStatus game_status;
+
+    // snake variables
+    SNAKE_MAIN_ACTION snake_action = SNAKE_MAIN_RIGHT;
     SnakeObject *snake = NULL;
+
+    // apple object
+    ObjectApple apple;
 
     // Loop
     for (;;) {
         switch (game_state) {
             case GAME_INIT:
-                gameSetup();
+                gameSetup(&game_status);
                 // gameMenu(speed, symbols definition);
 
-                objectSortApple(&game_apple.x, &game_apple.y);
+                objectSortApple(&apple);
 
                 if (!snakeInit(&snake))
                     game_state = GAME_ERROR;
@@ -37,17 +32,17 @@ int main(void) {
                 break;
 
             case GAME_RUN:
-                objectDrawBackground(game_apple.x, game_apple.y);
+                objectDrawBackground(apple);
 
-                game_user.status_hit = snakeUpdateObject(snake, snake_action);
+                game_status.hit = snakeUpdateObject(&game_status, snake, snake_action, apple);
                 snakeUpdateAction(&snake_action);
 
-                if (game_user.status_hit == SNAKE_HIT_APPLE) {
-                    mvprintw(OBJECT_RECT_Y_LIMITS - 40, 0, msg_score);
-                    objectSortApple(&game_apple.x, &game_apple.y);
+                if (game_status.hit == SNAKE_MAIN_HIT_APPLE) {
+                    mvprintw(SNAKE_MAIN_RECT_Y_LIMITS - 40, 0, game_status.score_str);
+                    objectSortApple(&apple);
                     if (!snakeAddNode(snake))
                         game_state = GAME_ERROR;
-                } else if (game_user.status_hit == SNAKE_HIT_WALL)
+                } else if (game_status.hit == SNAKE_MAIN_HIT_WALL)
                     game_state = GAME_OVER;
 
                 break;
@@ -58,7 +53,7 @@ int main(void) {
                     refresh();
                     usleep(100 * 2000);
 
-                    mvaddstr(OBJECT_RECT_Y_LIMITS - 50, OBJECT_RECT_Y_LIMITS / 2 - 8, "GAME OVER");
+                    mvaddstr(SNAKE_MAIN_RECT_Y_LIMITS - 50, SNAKE_MAIN_RECT_Y_LIMITS / 2 - 8, "GAME OVER");
                     refresh();
                     usleep(100 * 2000);
                 }

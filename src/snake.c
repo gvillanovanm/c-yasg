@@ -1,10 +1,6 @@
 #include "snake.h"
 
-#include <stdbool.h>
-#include <stdlib.h>
-
-#include "main.h"
-#include "objects.h"
+// #include "main.h"
 
 /* --------------------------------------------------------*/
 // Private functions
@@ -36,33 +32,6 @@ SnakeObject* snakeCopy(SnakeObject* snake) {
     return listhead;
 }
 
-//
-//
-//
-SNAKE_HIT snakeHitDetection(unsigned head_snake_x, unsigned head_snake_y, SNAKE_ACTION movement) {
-    // TODO: detect body
-
-    if (game_apple.y == head_snake_x && game_apple.x == head_snake_y) {
-        game_user.score++;
-        sprintf(msg_score, "\nScore: %u", game_user.score);
-        return SNAKE_HIT_APPLE;
-    }
-
-    switch (movement) {
-        case SNAKE_RIGHT:
-        case SNAKE_LEFT:
-            if (head_snake_x == OBJECT_RECT_Y_LIMITS - 1 || head_snake_x == 0)
-                return SNAKE_HIT_WALL;
-
-        case SNAKE_UP:
-        case SNAKE_DOWN:
-            if (head_snake_y == OBJECT_RECT_X_LIMITS - 1 || head_snake_y == 0)
-                return SNAKE_HIT_WALL;
-    }
-
-    return SNAKE_HIT_NOTHING;
-}
-
 /* --------------------------------------------------------*/
 // Public functions
 /* --------------------------------------------------------*/
@@ -83,8 +52,8 @@ bool snakeInit(SnakeObject** snake) {
         else
             temp->is_head = false;
 
-        temp->x = ((OBJECT_RECT_Y_LIMITS - 1) / 2) + i;
-        temp->y = ((OBJECT_RECT_X_LIMITS - 1) / 2);
+        temp->x = ((SNAKE_MAIN_RECT_Y_LIMITS - 1) / 2) + i;
+        temp->y = ((SNAKE_MAIN_RECT_X_LIMITS - 1) / 2);
         temp->size = SNAKE_INITIAL_LENGTH;
 
         temp->next = *snake;
@@ -97,31 +66,31 @@ bool snakeInit(SnakeObject** snake) {
 //
 // snakeUpdateAction
 //
-void snakeUpdateAction(SNAKE_ACTION* action_mov) {
+void snakeUpdateAction(SNAKE_MAIN_ACTION* action_mov) {
     char get_key;
 
     timeout(.1);
     get_key = getch();
 
     switch (*action_mov) {
-        case SNAKE_RIGHT:
-            if (get_key == SNAKE_UP_UPPER || get_key == SNAKE_UP_LOW) *action_mov = SNAKE_UP;
-            if (get_key == SNAKE_DOWN_UPPER || get_key == SNAKE_DOWN_LOW) *action_mov = SNAKE_DOWN;
+        case SNAKE_MAIN_RIGHT:
+            if (get_key == SNAKE_UP_UPPER || get_key == SNAKE_UP_LOW) *action_mov = SNAKE_MAIN_UP;
+            if (get_key == SNAKE_DOWN_UPPER || get_key == SNAKE_DOWN_LOW) *action_mov = SNAKE_MAIN_DOWN;
             break;
 
-        case SNAKE_UP:
-            if (get_key == SNAKE_RIGHT_UPPER || get_key == SNAKE_RIGHT_LOW) *action_mov = SNAKE_RIGHT;
-            if (get_key == SNAKE_LEFT_UPPER || get_key == SNAKE_LEFT_LOW) *action_mov = SNAKE_LEFT;
+        case SNAKE_MAIN_UP:
+            if (get_key == SNAKE_RIGHT_UPPER || get_key == SNAKE_RIGHT_LOW) *action_mov = SNAKE_MAIN_RIGHT;
+            if (get_key == SNAKE_LEFT_UPPER || get_key == SNAKE_LEFT_LOW) *action_mov = SNAKE_MAIN_LEFT;
             break;
 
-        case SNAKE_LEFT:
-            if (get_key == SNAKE_UP_UPPER || get_key == SNAKE_UP_LOW) *action_mov = SNAKE_UP;
-            if (get_key == SNAKE_DOWN_UPPER || get_key == SNAKE_DOWN_LOW) *action_mov = SNAKE_DOWN;
+        case SNAKE_MAIN_LEFT:
+            if (get_key == SNAKE_UP_UPPER || get_key == SNAKE_UP_LOW) *action_mov = SNAKE_MAIN_UP;
+            if (get_key == SNAKE_DOWN_UPPER || get_key == SNAKE_DOWN_LOW) *action_mov = SNAKE_MAIN_DOWN;
             break;
 
-        case SNAKE_DOWN:
-            if (get_key == SNAKE_RIGHT_UPPER || get_key == SNAKE_RIGHT_LOW) *action_mov = SNAKE_RIGHT;
-            if (get_key == SNAKE_LEFT_UPPER || get_key == SNAKE_LEFT_LOW) *action_mov = SNAKE_LEFT;
+        case SNAKE_MAIN_DOWN:
+            if (get_key == SNAKE_RIGHT_UPPER || get_key == SNAKE_RIGHT_LOW) *action_mov = SNAKE_MAIN_RIGHT;
+            if (get_key == SNAKE_LEFT_UPPER || get_key == SNAKE_LEFT_LOW) *action_mov = SNAKE_MAIN_LEFT;
             break;
     }
     return;
@@ -130,81 +99,81 @@ void snakeUpdateAction(SNAKE_ACTION* action_mov) {
 //
 // snakeUpdateObject
 //
-SNAKE_HIT snakeUpdateObject(SnakeObject* snake, SNAKE_ACTION moviment) {
-    SNAKE_HIT snake_hit = SNAKE_HIT_NOTHING;
+SNAKE_MAIN_HIT snakeUpdateObject(GameStatus* game_status, SnakeObject* snake, SNAKE_MAIN_ACTION moviment, ObjectApple apple) {
+    SNAKE_MAIN_HIT snake_hit = SNAKE_MAIN_HIT_NOTHING;
     SnakeObject *temp = snake, *snake_copy = NULL;
 
     switch (moviment) {
-        case SNAKE_RIGHT:
+        case SNAKE_MAIN_RIGHT:
             snake_copy = snakeCopy(snake);
 
             while (temp != NULL) {
                 if (temp->is_head) {
                     temp->x++;
-                    mvprintw(temp->y, temp->x, GAME_SYMBOL_OF_HEAD_SNAKE);
-                    snake_hit = snakeHitDetection(temp->x, temp->y, moviment);
+                    mvprintw(temp->y, temp->x, SNAKE_SYMBOL_OF_HEAD);
+                    snake_hit = snakeHitDetection(game_status, temp->x, temp->y, moviment, apple);
                 } else {
                     temp->x = snake_copy->x;
                     temp->y = snake_copy->y;
                     snake_copy = snake_copy->next;
-                    mvprintw(temp->y, temp->x, GAME_SYMBOL_OF_SNAKE);
+                    mvprintw(temp->y, temp->x, SNAKE_SYMBOL_OF_BODY);
                 }
                 temp = temp->next;
             }
             free(snake_copy);
             break;
 
-        case SNAKE_UP:
+        case SNAKE_MAIN_UP:
             snake_copy = snakeCopy(snake);
 
             while (temp != NULL) {
                 if (temp->is_head) {
                     temp->y--;
-                    mvprintw(temp->y, temp->x, GAME_SYMBOL_OF_HEAD_SNAKE);
-                    snake_hit = snakeHitDetection(temp->x, temp->y, moviment);
+                    mvprintw(temp->y, temp->x, SNAKE_SYMBOL_OF_HEAD);
+                    snake_hit = snakeHitDetection(game_status, temp->x, temp->y, moviment, apple);
                 } else {
                     temp->x = snake_copy->x;
                     temp->y = snake_copy->y;
                     snake_copy = snake_copy->next;
-                    mvprintw(temp->y, temp->x, GAME_SYMBOL_OF_SNAKE);
+                    mvprintw(temp->y, temp->x, SNAKE_SYMBOL_OF_BODY);
                 }
                 temp = temp->next;
             }
             free(snake_copy);
             break;
 
-        case SNAKE_DOWN:
+        case SNAKE_MAIN_DOWN:
             snake_copy = snakeCopy(snake);
 
             while (temp != NULL) {
                 if (temp->is_head) {
                     temp->y++;
-                    mvprintw(temp->y, temp->x, GAME_SYMBOL_OF_HEAD_SNAKE);
-                    snake_hit = snakeHitDetection(temp->x, temp->y, moviment);
+                    mvprintw(temp->y, temp->x, SNAKE_SYMBOL_OF_HEAD);
+                    snake_hit = snakeHitDetection(game_status, temp->x, temp->y, moviment, apple);
                 } else {
                     temp->x = snake_copy->x;
                     temp->y = snake_copy->y;
                     snake_copy = snake_copy->next;
-                    mvprintw(temp->y, temp->x, GAME_SYMBOL_OF_SNAKE);
+                    mvprintw(temp->y, temp->x, SNAKE_SYMBOL_OF_BODY);
                 }
                 temp = temp->next;
             }
             free(snake_copy);
             break;
 
-        case SNAKE_LEFT:
+        case SNAKE_MAIN_LEFT:
             snake_copy = snakeCopy(snake);
 
             while (temp != NULL) {
                 if (temp->is_head) {
                     temp->x--;
-                    mvprintw(temp->y, temp->x, GAME_SYMBOL_OF_HEAD_SNAKE);
-                    snake_hit = snakeHitDetection(temp->x, temp->y, moviment);
+                    mvprintw(temp->y, temp->x, SNAKE_SYMBOL_OF_HEAD);
+                    snake_hit = snakeHitDetection(game_status, temp->x, temp->y, moviment, apple);
                 } else {
                     temp->x = snake_copy->x;
                     temp->y = snake_copy->y;
                     snake_copy = snake_copy->next;
-                    mvprintw(temp->y, temp->x, GAME_SYMBOL_OF_SNAKE);
+                    mvprintw(temp->y, temp->x, SNAKE_SYMBOL_OF_BODY);
                 }
                 temp = temp->next;
             }

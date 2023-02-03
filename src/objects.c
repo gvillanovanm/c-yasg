@@ -1,53 +1,37 @@
 #include "objects.h"
 
-#include "main.h"
-
 //
 //
 //
-void objectDrawBackground(unsigned x_apple, unsigned y_apple) {
+void objectDrawBackground(ObjectApple apple) {
     int i, j;
 
     // this algorithm can be better:
     move(0, 0);
-    for (i = 0; i < OBJECT_RECT_X_LIMITS; i++) {
-        for (j = 0; j < OBJECT_RECT_Y_LIMITS; j++) {
-            if (i == 0 || i == OBJECT_RECT_X_LIMITS - 1)
-                printw(GAME_SYMBOL_OF_WALL);
-            else if (i == x_apple && j == y_apple)
-                printw(GAME_SYMBOL_OF_APPLE);
-            else if (i != 0 && i != OBJECT_RECT_X_LIMITS - 1 && j > 0 && j < OBJECT_RECT_Y_LIMITS - 1)
+    for (i = 0; i < SNAKE_MAIN_RECT_X_LIMITS; i++) {
+        for (j = 0; j < SNAKE_MAIN_RECT_Y_LIMITS; j++) {
+            if (i == 0 || i == SNAKE_MAIN_RECT_X_LIMITS - 1)
+                printw(OBJECT_SYMBOL_OF_WALL);
+            else if (i == apple.x && j == apple.y)
+                printw(OBJECT_SYMBOL_OF_APPLE);
+            else if (i != 0 && i != SNAKE_MAIN_RECT_X_LIMITS - 1 && j > 0 && j < SNAKE_MAIN_RECT_Y_LIMITS - 1)
                 printw(" ");
             else
-                printw(GAME_SYMBOL_OF_WALL);
+                printw(OBJECT_SYMBOL_OF_WALL);
         }
         printw("\n");
     }
 }
 
-void objectSortApple(unsigned *x_apple, unsigned *y_apple) {
+//
+//
+//
+void objectSortApple(ObjectApple *apple) {
     // TODO: sort region out of snake
 
-    *x_apple = rand() % (OBJECT_RECT_X_LIMITS - 1);
-    if (*x_apple == 0) *x_apple = *x_apple + 2;
+    apple->x = rand() % (SNAKE_MAIN_RECT_X_LIMITS - 1);
+    if (apple->x == 0) apple->x = apple->x + 2;
 
-    *y_apple = rand() % (OBJECT_RECT_Y_LIMITS - 1);
-    if (*y_apple == 0) *y_apple = *y_apple + 2;
-}
-
-void objectDrawCowsay(void) {
-    char eyes = 'o';
-    char upperbubble = '\\';
-    char lowerbubble = '\\';
-    char str[150];
-
-    sprintf(str,
-            "\n\n----------\n        %c   ^__^\n\
-         %c  (%c%c)\\_______\n\
-            (__)\\       )\\/\\\n\
-                ||----w |\n\
-                ||     ||\n",
-            upperbubble, lowerbubble, eyes, eyes);
-
-    mvprintw(OBJECT_RECT_Y_LIMITS - 40, 0, str);
+    apple->y = rand() % (SNAKE_MAIN_RECT_Y_LIMITS - 1);
+    if (apple->y == 0) apple->y = apple->y + 2;
 }

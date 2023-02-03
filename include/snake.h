@@ -1,7 +1,14 @@
 #ifndef __SNAKE_MOVEMENT
 #define __SNAKE_MOVEMENT
 
+#include <ncurses.h>
 #include <stdbool.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <unistd.h>
+
+#include "main.h"
 
 #define SNAKE_INITIAL_LENGTH 3
 
@@ -13,19 +20,8 @@
 #define SNAKE_LEFT_LOW 'a'
 #define SNAKE_RIGHT_UPPER 'D'
 #define SNAKE_RIGHT_LOW 'd'
-
-typedef enum SNAKE_ACTION_e {
-    SNAKE_UP,
-    SNAKE_DOWN,
-    SNAKE_LEFT,
-    SNAKE_RIGHT,
-} SNAKE_ACTION;
-
-typedef enum SNAKE_HIT_e {
-    SNAKE_HIT_APPLE,
-    SNAKE_HIT_WALL,
-    SNAKE_HIT_NOTHING,
-} SNAKE_HIT;
+#define SNAKE_SYMBOL_OF_HEAD "W"
+#define SNAKE_SYMBOL_OF_BODY "-"
 
 typedef struct SnakeObject_t {
     bool is_head;
@@ -37,12 +33,11 @@ typedef struct SnakeObject_t {
 
 // Private functions
 SnakeObject* snakeCopy(SnakeObject*);
-SNAKE_HIT snakeHitDetection(unsigned, unsigned, SNAKE_ACTION);
 
 // Public functions
 bool snakeInit(SnakeObject**);
-void snakeUpdateAction(SNAKE_ACTION*);
-SNAKE_HIT snakeUpdateObject(SnakeObject*, SNAKE_ACTION);
+void snakeUpdateAction(SNAKE_MAIN_ACTION*);
+SNAKE_MAIN_HIT snakeUpdateObject(GameStatus*, SnakeObject*, SNAKE_MAIN_ACTION, ObjectApple);
 bool snakeAddNode(SnakeObject*);
 
 #endif  // __SNAKE_MOVEMENT

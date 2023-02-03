@@ -7,33 +7,34 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "objects.h"
-#include "snake.h"
+// ALL SHARED THINGS
+#define SNAKE_MAIN_RECT_X_LIMITS 20  // 40
+#define SNAKE_MAIN_RECT_Y_LIMITS 60  // 100
 
-#define GAME_SPEED 50
-#define GAME_SYMBOL_OF_APPLE "A"
-#define GAME_SYMBOL_OF_HEAD_SNAKE "W"
-#define GAME_SYMBOL_OF_SNAKE "-"
-#define GAME_SYMBOL_OF_WALL "#"
+typedef enum SNAKE_MAIN_HIT_e {
+    SNAKE_MAIN_HIT_APPLE,
+    SNAKE_MAIN_HIT_WALL,
+    SNAKE_MAIN_HIT_NOTHING,
+} SNAKE_MAIN_HIT;
 
-typedef enum GAME_STATE_e {
-    GAME_INIT,
-    GAME_RUN,
-    GAME_OVER,
-    GAME_ERROR
-} GAME_STATE;
+typedef enum SNAKE_MAIN_ACTION_e {
+    SNAKE_MAIN_UP,
+    SNAKE_MAIN_DOWN,
+    SNAKE_MAIN_LEFT,
+    SNAKE_MAIN_RIGHT,
+} SNAKE_MAIN_ACTION;
 
-typedef struct GameUserStatus_T {
-    SNAKE_HIT status_hit;
+typedef struct ObjectApple_t {
+    unsigned x;
+    unsigned y;
+} ObjectApple;
+
+typedef struct GameStatus_t {
+    SNAKE_MAIN_HIT hit;
     unsigned score;
-} GameUserStatus;
+    char score_str[15];
+} GameStatus;
 
-// Global variables
-ObjectApple game_apple;
-GameUserStatus game_user;
-char msg_score[15];
-
-// Public Functions
-void gameSetup(void);
+SNAKE_MAIN_HIT snakeHitDetection(GameStatus* game_status, unsigned head_snake_x, unsigned head_snake_y, SNAKE_MAIN_ACTION movement, ObjectApple apple);
 
 #endif  // __SNAKE_MAIN
