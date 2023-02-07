@@ -20,15 +20,16 @@ int main(void) {
     for (;;) {
         switch (game_state) {
             case GAME_INIT:
+                // initialize background
                 gameSetup(&game_status);
-                // gameMenu(speed, symbols definition);
+                // todo: gameMenu(speed, symbols definition);
 
+                // initialize snake
+                snake = snakeInit();
+                game_state = (snake) ? GAME_RUN : GAME_ERROR;
+
+                // create first "apple"
                 objectSortApple(&apple);
-
-                if (!snakeInit(&snake))
-                    game_state = GAME_ERROR;
-                else
-                    game_state = GAME_RUN;
                 break;
 
             case GAME_RUN:

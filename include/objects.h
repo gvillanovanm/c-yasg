@@ -6,8 +6,8 @@
 
 #include "main.h"
 
-#define OBJECT_SYMBOL_OF_APPLE "A"
-#define OBJECT_SYMBOL_OF_WALL "#"
+#define OBJECT_SYMBOL_OF_APPLE "o"
+#define OBJECT_SYMBOL_OF_WALL "!"
 
 void objectDrawBackground(ObjectApple);
 void objectSortApple(ObjectApple*);

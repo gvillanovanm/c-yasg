@@ -20,8 +20,8 @@
 #define SNAKE_LEFT_LOW 'a'
 #define SNAKE_RIGHT_UPPER 'D'
 #define SNAKE_RIGHT_LOW 'd'
-#define SNAKE_SYMBOL_OF_HEAD "W"
-#define SNAKE_SYMBOL_OF_BODY "-"
+#define SNAKE_SYMBOL_OF_HEAD "@"
+#define SNAKE_SYMBOL_OF_BODY "."
 
 typedef struct SnakeObject_t {
     bool is_head;
@@ -35,7 +35,7 @@ typedef struct SnakeObject_t {
 SnakeObject* snakeCopy(SnakeObject*);
 
 // Public functions
-bool snakeInit(SnakeObject**);
+SnakeObject* snakeInit(void);
 void snakeUpdateAction(SNAKE_MAIN_ACTION*);
 SNAKE_MAIN_HIT snakeUpdateObject(GameStatus*, SnakeObject*, SNAKE_MAIN_ACTION, ObjectApple);
 bool snakeAddNode(SnakeObject*);

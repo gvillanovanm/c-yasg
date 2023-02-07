@@ -3,7 +3,7 @@
 
 #include "main.h"
 
-#define GAME_SPEED 50
+#define GAME_SPEED 80
 
 typedef enum GAME_STATE_e {
     GAME_INIT,

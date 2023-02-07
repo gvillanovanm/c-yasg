@@ -1,37 +1,5 @@
 #include "snake.h"
 
-// #include "main.h"
-
-/* --------------------------------------------------------*/
-// Private functions
-/* --------------------------------------------------------*/
-
-//
-// snakeCopy
-//
-SnakeObject* snakeCopy(SnakeObject* snake) {
-    SnakeObject *temp = NULL, *listhead = NULL, *temp_snake = snake;
-
-    temp = malloc(sizeof(SnakeObject));
-    listhead = temp;
-
-    if (temp == NULL)
-        return NULL;
-
-    while (temp_snake != NULL) {
-        temp->x = temp_snake->x;
-        temp->y = temp_snake->y;
-
-        temp->next = malloc(sizeof(SnakeObject));
-        temp = temp->next;
-
-        temp_snake = temp_snake->next;
-    }
-    temp->next = NULL;
-
-    return listhead;
-}
-
 /* --------------------------------------------------------*/
 // Public functions
 /* --------------------------------------------------------*/
@@ -39,13 +7,15 @@ SnakeObject* snakeCopy(SnakeObject* snake) {
 //
 // snakeInit
 //
-bool snakeInit(SnakeObject** snake) {
+SnakeObject* snakeInit(void) {
     SnakeObject* temp = NULL;
+    SnakeObject* head = NULL;
 
     for (int i = 0; i < SNAKE_INITIAL_LENGTH; i++) {
         temp = malloc(sizeof(SnakeObject));
 
-        if (temp == NULL) return false;
+        if (temp == NULL)
+            return NULL;
 
         if (i == SNAKE_INITIAL_LENGTH - 1)
             temp->is_head = true;
@@ -56,11 +26,11 @@ bool snakeInit(SnakeObject** snake) {
         temp->y = ((SNAKE_MAIN_RECT_X_LIMITS - 1) / 2);
         temp->size = SNAKE_INITIAL_LENGTH;
 
-        temp->next = *snake;
-        *snake = temp;
+        temp->next = head;
+        head = temp;
     }
 
-    return true;
+    return head;
 }
 
 //
@@ -115,11 +85,12 @@ SNAKE_MAIN_HIT snakeUpdateObject(GameStatus* game_status, SnakeObject* snake, SN
                 } else {
                     temp->x = snake_copy->x;
                     temp->y = snake_copy->y;
-                    snake_copy = snake_copy->next;
+                    snake_copy = snake_copy->next;  // if i dont copy, i will loss snake reference
                     mvprintw(temp->y, temp->x, SNAKE_SYMBOL_OF_BODY);
                 }
                 temp = temp->next;
             }
+            // TODO: free recursive
             free(snake_copy);
             break;
 
@@ -139,6 +110,7 @@ SNAKE_MAIN_HIT snakeUpdateObject(GameStatus* game_status, SnakeObject* snake, SN
                 }
                 temp = temp->next;
             }
+            // TODO: free recursive
             free(snake_copy);
             break;
 
@@ -158,6 +130,7 @@ SNAKE_MAIN_HIT snakeUpdateObject(GameStatus* game_status, SnakeObject* snake, SN
                 }
                 temp = temp->next;
             }
+            // TODO: free recursive
             free(snake_copy);
             break;
 
@@ -177,6 +150,7 @@ SNAKE_MAIN_HIT snakeUpdateObject(GameStatus* game_status, SnakeObject* snake, SN
                 }
                 temp = temp->next;
             }
+            // TODO: free recursive
             free(snake_copy);
             break;
     }
@@ -204,4 +178,39 @@ bool snakeAddNode(SnakeObject* snake) {
     new_node->next = NULL;
 
     return true;
+}
+
+/* --------------------------------------------------------*/
+// Private functions
+/* --------------------------------------------------------*/
+
+//
+// snakeCopy
+//
+SnakeObject* snakeCopy(SnakeObject* snake) {
+    SnakeObject* temp = NULL;
+    SnakeObject* head = NULL;
+    SnakeObject* temp_snake;
+
+    // save snake
+    temp_snake = snake;
+
+    temp = malloc(sizeof(SnakeObject));
+    head = temp;
+
+    if (temp == NULL)
+        return NULL;
+
+    while (temp_snake != NULL) {
+        temp->x = temp_snake->x;
+        temp->y = temp_snake->y;
+
+        temp->next = malloc(sizeof(SnakeObject));
+        temp = temp->next;
+
+        temp_snake = temp_snake->next;
+    }
+    temp->next = NULL;
+
+    return head;
 }

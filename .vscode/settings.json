@@ -1,7 +1,11 @@
 {
   "C_Cpp.intelliSenseEngineFallback": "Enabled",
   "files.associations": {
-    "objects.h": "c"
+    "objects.h": "c",
+    "game.h": "c",
+    "snake.h": "c",
+    "ncurses.h": "c",
+    "main.h": "c"
   },
   "C_Cpp.clang_format_fallbackStyle": "{ BasedOnStyle: Google, IndentWidth: 4, ColumnLimit: 0}",
   "editor.tabSize": 2,
