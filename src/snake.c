@@ -34,6 +34,21 @@ SnakeObject* snakeInit(void) {
 }
 
 //
+//
+//
+void snakeDestroy(SnakeObject* snake) {
+    if (snake == NULL)
+        return;
+
+    if (snake->next != NULL) {
+        snakeDestroy(snake->next);
+        snake->next = NULL;
+    }
+
+    free(snake);
+}
+
+//
 // snakeUpdateAction
 //
 void snakeUpdateAction(SNAKE_MAIN_ACTION* action_mov) {
@@ -90,7 +105,7 @@ SNAKE_MAIN_HIT snakeUpdateObject(GameStatus* game_status, SnakeObject* snake, SN
                 }
                 temp = temp->next;
             }
-            // TODO: free recursive
+
             free(snake_copy);
             break;
 
@@ -110,7 +125,7 @@ SNAKE_MAIN_HIT snakeUpdateObject(GameStatus* game_status, SnakeObject* snake, SN
                 }
                 temp = temp->next;
             }
-            // TODO: free recursive
+
             free(snake_copy);
             break;
 
@@ -130,7 +145,7 @@ SNAKE_MAIN_HIT snakeUpdateObject(GameStatus* game_status, SnakeObject* snake, SN
                 }
                 temp = temp->next;
             }
-            // TODO: free recursive
+
             free(snake_copy);
             break;
 
@@ -150,7 +165,7 @@ SNAKE_MAIN_HIT snakeUpdateObject(GameStatus* game_status, SnakeObject* snake, SN
                 }
                 temp = temp->next;
             }
-            // TODO: free recursive
+
             free(snake_copy);
             break;
     }

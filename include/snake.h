@@ -36,6 +36,7 @@ SnakeObject* snakeCopy(SnakeObject*);
 
 // Public functions
 SnakeObject* snakeInit(void);
+void snakeDestroy(SnakeObject*);
 void snakeUpdateAction(SNAKE_MAIN_ACTION*);
 SNAKE_MAIN_HIT snakeUpdateObject(GameStatus*, SnakeObject*, SNAKE_MAIN_ACTION, ObjectApple);
 bool snakeAddNode(SnakeObject*);

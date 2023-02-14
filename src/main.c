@@ -22,6 +22,7 @@ int main(void) {
             case GAME_INIT:
                 // initialize background
                 gameSetup(&game_status);
+                objectDrawCowsay();
                 // todo: gameMenu(speed, symbols definition);
 
                 // initialize snake
@@ -59,15 +60,13 @@ int main(void) {
                     usleep(100 * 2000);
                 }
 
-                // to-do: recursive free
-                free(snake);
+                snakeDestroy(snake);
                 endwin();
 
                 return 0;
 
             case GAME_ERROR:
-                // to-do: recursive free
-                free(snake);
+                snakeDestroy(snake);
                 endwin();
                 return -1;
         }
@@ -75,10 +74,8 @@ int main(void) {
         usleep(GAME_SPEED * 1000);
     }
 
-    // End game: it never reaches here
-
-    // to-do: recursive free
-    free(snake);
+    // end game: it never reaches here
+    snakeDestroy(snake);
     endwin();
 
     return 0;

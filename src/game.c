@@ -5,27 +5,7 @@
 /* --------------------------------------------------------*/
 
 //
-//
-//
-void objectDrawCowsay(void) {
-    char eyes = 'o';
-    char upperbubble = '\\';
-    char lowerbubble = '\\';
-    char str[150];
-
-    sprintf(str,
-            "\n\n----------\n        %c   ^__^\n\
-         %c  (%c%c)\\_______\n\
-            (__)\\       )\\/\\\n\
-                ||----w |\n\
-                ||     ||\n",
-            upperbubble, lowerbubble, eyes, eyes);
-
-    mvprintw(SNAKE_MAIN_RECT_Y_LIMITS - 40, 0, str);
-}
-
-//
-// snakeInit
+// gameSetup
 //
 void gameSetup(GameStatus* status) {
     srand(time(NULL));
@@ -36,7 +16,7 @@ void gameSetup(GameStatus* status) {
     status->hit = SNAKE_MAIN_HIT_NOTHING;
     status->score = 0;
 
-    objectDrawCowsay();
+    // objectDrawCowsay();
 }
 
 //
